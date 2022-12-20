@@ -1,0 +1,37 @@
+{
+  "actions": [
+    {
+      "start_time": 0.1,
+      "end_time":43.400000000000006,
+      "actor0": 0,
+      "category": "any",
+      "actor0_type": "pedestrian"
+    },
+    {
+      "start_time": 0.1,
+      "end_time":43.400000000000006,
+      "actor0": 5130993,
+      "category": "any",
+      "actor0_type": "pedestrian"
+    }
+  ],
+  "Scolabels": [
+    {
+      "Level1": ["Level1_type","1_cahr"],
+      "Level2": ["Level2_type","2_cahr"],
+      "Level3": ["Level3_type","3_cahr"],
+      "Level4": ["Level3_type","4_cahr"],
+      "Level5": ["Level4_type","5_cahr"],
+      "Level6": ["Level5_type","6_cahr"]
+    },
+    {
+      "Level1": ["Level1_type","7_cahr"],
+      "Level2": ["Level2_type","8_cahr"],
+      "Level3": ["Level3_type","9_cahr"],
+      "Level4": ["Level3_type","10_cahr"],
+      "Level5": ["Level4_type","11_cahr"],
+      "Level6": ["Level5_type","12_cahr"]
+    }
+  ]
+
+}

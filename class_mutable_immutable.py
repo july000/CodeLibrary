@@ -8,15 +8,18 @@ https://stackoverflow.com/questions/62029673/is-this-python-class-mutable
 
 class Clock:
     def __init__(self, time):
-        self._time = time   
+        self._time = time   # non-public attribute/protected,  should not be accessed or modified directly outside of the class 
+    @property           # == get time
     def time(self):
         return self._time
+    
 
     def print_time(self):
         print(self._time)
 
+
 boston_clock = Clock('5:30')
 paris_clock = boston_clock  # object reference, same object, one object
-paris_clock.time = '10:30'  # ??? assign value to a function?
+paris_clock.time = '10:30'  # .time equal a time attribute, access value; change value is invaild, error
 boston_clock.print_time()   # result is 5:30
 print(id(paris_clock), id(boston_clock))    #same id

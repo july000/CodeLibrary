@@ -20,6 +20,10 @@ class Clock:
     def time(self, value):
         self._time = value
 
+    @time.deleter
+    def time(self):
+        del self._time
+
     def print_time(self):
         print(self._time)
 
@@ -27,5 +31,6 @@ class Clock:
 boston_clock = Clock('5:30')
 paris_clock = boston_clock  # object reference, same object, one object
 paris_clock.time = '10:30'  # update time
+del paris_clock.price
 boston_clock.print_time()   # result is 5:30
 print(id(paris_clock), id(boston_clock))    #same id

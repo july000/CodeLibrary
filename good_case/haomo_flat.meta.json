@@ -1,0 +1,10 @@
+{
+    "category": "haomo",
+    "type": "unified",
+    "map": "",
+    "map_background": "",
+    "main_vehicle_id": "0",
+    "trajectories": "haomo_flat.csv",
+    "agents": "haomo.agents.json",
+    "sensor_settings": "haomo.cal.json"
+}

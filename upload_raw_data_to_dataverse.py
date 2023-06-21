@@ -48,7 +48,7 @@ def uppp():
             scene_id = res_transform_data['scene_id']
     
             # 根据scene-id拼出可视化的url
-            scene_url = 'http://10.66.12.37:30050/api/visualization/?scene_id='+scene_id+'=front&data_url=ws://10.66.12.37:31888/visualization'
+            scene_url = 'http://10.66.12.77:30701/?scene_id='+scene_id+'&name=&data_url=ws://10.66.12.37:31888/visualization'
 
             # print(case_number, scene_url)
             return (case_number, scene_url)
@@ -92,15 +92,21 @@ if __name__ == '__main__':
     # csv_file_path = '\\\\10.66.9.58\\share2\\datamining\\scenarios\\haomo\\1210\\processed\\osc\\hibag_V71R003_default_013_20211210100844_20211210100940\\haomo_flat.csv'
     # xodr_file_path = "\\\\10.66.9.58\\share2\\datamining\\scenarios\\haomo\\map_no_signal.xodr"
 
-    # csv_file_path = 'C:\\Users\\junmei\\Documents\\WXWork\\1688853099564451\\Cache\\File\\2023-05\\rosbag-xodr-parse-production-375-lc_5677_test\\rosbag2.csv'
-    # xodr_file_path = "C:\\Users\\junmei\\Documents\\WXWork\\1688853099564451\\Cache\\File\\2023-05\\rosbag-xodr-parse-production-375-lc_5677_test\\2023_03_31_05_36_35_zlog.xodr"
+    # csv_file_path = 'C:\\Users\\junmei\\Documents\\WXWork\\1688853099564451\\Cache\\File\\2023-05\\rosbag-xodr-parse-production-389-ACIPD-6566\\rosbag2.csv'
+    # xodr_file_path = "C:\\Users\\junmei\\Documents\\WXWork\\1688853099564451\\Cache\\File\\2023-05\\rosbag-xodr-parse-production-389-ACIPD-6566\\2023_03_31_05_36_35_zlog.xodr"
 
     # csv_file_path = "D:\\cybertron\\Cybertron\\Tools\\TrajectoryProcess\\test\\015\\rosbag2.csv"
     # xodr_file_path = "D:\\cybertron\\Cybertron\\Tools\\TrajectoryProcess\\test\\lingshu\\2023419\\2023_04_14_02_23_09_ehp_output.xodr"
 
 
-    csv_file_path = "C:\\Users\\junmei\\Documents\\WXWork\\1688853099564451\\Cache\\File\\2023-05\\rosbag-xodr-parse-production-375-lc_5677_test\\rosbag2.csv"
-    xodr_file_path = "C:\\Users\\junmei\\Documents\\WXWork\\1688853099564451\\Cache\\File\\2023-05\\rosbag-xodr-parse-production-375-lc_5677_test\\2023_03_31_05_36_35_zlog.xodr"
+    # csv_file_path = "C:\\Users\\junmei\\Documents\\WXWork\\1688853099564451\\Cache\\File\\2023-05\\rosbag-xodr-parse-production-389-ACIPD-6566\\rosbag2.csv"
+    # xodr_file_path = "C:\\Users\\junmei\\Documents\\WXWork\\1688853099564451\\Cache\\File\\2023-05\\rosbag-xodr-parse-production-389-ACIPD-6566\\2023_03_31_05_36_35_zlog.xodr"
 
-    upload_single_case(lingshutest_url, csv_file_path, xodr_file_path, {'map_type':'xodr', 'data_source':'lingshu'}, 'lingshu__0529_2023_03_31_05_36_35_zlog.xodr', 'lingshu.csv')
+    # csv_file_path = 'G:\\63bbf2ca-0563-4e3d-b8db-6b433eb19959.origin.csv'
+    # xodr_file_path = 'G:\\b44e9a19-415a-4848-8ae0-311492e0aa00.xodr'
+
+    csv_file_path = '\\\\10.66.9.58\\share2\\datamining\\scenarios\\haomo\\1210\\processed\\osc\\hibag_V71R003_default_013_20211210100844_20211210100940\\haomo_flat.csv'
+    xodr_file_path = '\\\\10.66.9.58\\share2\\datamining\\scenarios\\haomo\\map_no_signal.xodr'
+
+    upload_single_case(dev_url, csv_file_path, xodr_file_path, {'map_type':'xodr', 'data_source':'haomo'}, 'haomo_022.xodr', 'haomo.csv')
 

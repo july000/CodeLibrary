@@ -1,34 +1,44 @@
 import matplotlib.pyplot as plt
-import numpy as np
 
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
+def enable_zooming(plot_func):
+    def zoom(event, ax):
+        base_scale = 1.1
+        if event.button == 'up':
+            # Zoom in
+            ax.set_xlim(event.xdata - (event.xdata - ax.get_xlim()[0]) / base_scale,
+                        event.xdata + (ax.get_xlim()[1] - event.xdata) / base_scale)
+            ax.set_ylim(event.ydata - (event.ydata - ax.get_ylim()[0]) / base_scale,
+                        event.ydata + (ax.get_ylim()[1] - event.ydata) / base_scale)
+        elif event.button == 'down':
+            # Zoom out
+            ax.set_xlim(event.xdata - (event.xdata - ax.get_xlim()[0]) * base_scale,
+                        event.xdata + (ax.get_xlim()[1] - event.xdata) * base_scale)
+            ax.set_ylim(event.ydata - (event.ydata - ax.get_ylim()[0]) * base_scale,
+                        event.ydata + (ax.get_ylim()[1] - event.ydata) * base_scale)
+        plt.draw()
 
-fig, ax = plt.subplots()
-ax.plot(x, y)
-ax.set_title('Plot Example')
-ax.set_xlabel('X Axis Label')
-ax.set_ylabel('Y Axis Label')
-ax.grid(True)
+    def wrapper(*args, **kwargs):
+        fig, ax = plot_func(*args, **kwargs)
+        ax.format_coord = lambda x, y: f'x={x:.2f}, y={y:.2f}'
+        ax.set_aspect('equal', adjustable='box')
+        ax.autoscale(enable=True, tight=True)
+        ax.margins(0.1)
+        ax.figure.canvas.mpl_connect('scroll_event', lambda event: zoom(event, ax))
+        plt.show()
 
-def on_scroll(event):
-    axtemp = event.inaxes
-    x_min, x_max = axtemp.get_xlim()
-    y_min, y_max = axtemp.get_ylim()
-    x_mid = (x_min + x_max)/2.0
-    y_mid = (y_min + y_max)/2.0
-    if event.button == 'up':
-        # 放大
-        scale_factor = 1/1.5
-    elif event.button == 'down':
-        # 缩小
-        scale_factor = 1.5
-    else:
-        # 没有滚动事件
-        scale_factor = 1
-    axtemp.set_xlim([x_mid - (x_mid - x_min)*scale_factor, x_mid + (x_max - x_mid)*scale_factor])
-    axtemp.set_ylim([y_mid - (y_mid - y_min)*scale_factor, y_mid + (y_max - y_mid)*scale_factor])
-    plt.draw()
+    return wrapper
 
-fig.canvas.mpl_connect('scroll_event', on_scroll)
-plt.show()
+@enable_zooming
+def plot_example():
+    # Generate some sample data
+    x = [1, 2, 3, 4, 5]
+    y = [2, 4, 6, 8, 10]
+
+    # Create the plot
+    fig, ax = plt.subplots()
+    ax.plot(x, y)
+
+    return fig, ax
+
+# Call the function to show the plot with zooming enabled
+plot_example()

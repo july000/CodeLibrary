@@ -1,5 +1,7 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
+import sympy as sp
+from scipy.optimize import fsolve
 
 def line_to_line(A, B, C, D):
     '''
@@ -95,6 +97,59 @@ def line_segment_distance(A, B, C, D):
     # 
     return min(dis1, dis2, dis3, dis4) if is_endpoint1 or is_endpoint2 or is_endpoint3 or is_endpoint4 else min(dis1, dis2, dis3, dis4, dis)
 
+def line_segment_distance_by_diff(A, B, C, D):
+    '''
+    建模思想
+    seg1:AB
+    seg2:CD
+    p:A+m(B-A)
+    q:C+m(D-C)
+    dis(p,q) ** 2 = |p-q|*|p-q| = [(A-C) + m(B-A) - n(D-C)]*[(A-C) + m(B-A) - n(D-C)]
+                  = |A-C|**2 
+    求dis(p,q)的最小值，分别对m, n求导，令倒数为0，求解方程组
+    如果m，n是否在[0,1]之间
+    '''
+    AB = B - A  # dir_v1
+    CD = D - C  # dir_v2
+    AC = C - A  # dir_ss
+
+    m = sp.Symbol('m')
+    n = sp.Symbol('n')
+    p = A + m*AB
+    q = C + n*CD
+
+    expr = np.dot((q-p), (q-p))
+
+    der_m = sp.diff(expr, m)
+    der_n = sp.diff(expr, n)
+    equations = [sp.Eq(der_m, 0), sp.Eq(der_n, 0)]
+    solution = sp.solve(equations, (m, n))
+
+    if 0 <= solution[m] <= 1 and 0 <= solution[n] <= 1:
+        dis = expr.subs([(m, solution[m]), (n, solution[n])])
+    else:
+        dis1, is_endpoint1 = point_to_line_segment(A, C, D)
+        dis2, is_endpoint2 = point_to_line_segment(B, C, D)
+        dis3, is_endpoint3 = point_to_line_segment(C, A, B)
+        dis4, is_endpoint4 = point_to_line_segment(D, A, B)
+        dis = min(dis1, dis2, dis3, dis4)
+
+    return dis
+
+def plot_3d_line_segment(pointA, pointB):
+    x1, y1, z1 = pointA
+    x2, y2, z2 = pointB
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    ax.plot([x1, x2], [y1, y2], [z1, z2])
+
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+
+    plt.show()
+
 if __name__ == '__main__':
 
 
@@ -114,3 +169,7 @@ if __name__ == '__main__':
 
     DIS = line_segment_distance(A, B, C, D)
     print(DIS)
+    dis = line_segment_distance_by_diff(A, B, C, D)
+    print(dis)
+
+    # plot_3d_line_segment(A, B)

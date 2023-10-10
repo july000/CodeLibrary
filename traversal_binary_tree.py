@@ -61,9 +61,39 @@ def level_order_traverse(root):
         ans.append(level_node)
     return ans
 
+def jagged_traverse(root):
+    '''
+    在层序遍历的基础上，进行更改
+    以s形状进行打印层序遍历
+    '''
+    if not root:
+        return []
+    ans = []
+    que = [root]
+    j = 0
+    while que:
+        level_size = len(que)
+        level_node = []
+        for i in range(level_size):
+            node = que.pop(0)
+            level_node.append(node.val)
+            if node.left:
+                que.append(node.left)
+            if node.right:
+                que.append(node.right)
+        if j % 2 == 0:
+            ans.append(level_node)
+        else:
+            ans.append(level_node[::-1])
+        j+=1
+    return ans
+
+
 # mid_traverse(tree)
 # prev_traverse(tree)
 # post_traverse(tree)
-ans = level_order_traverse(tree)
+# ans = level_order_traverse(tree)
+# print(ans)
+ans = jagged_traverse(tree)
 print(ans)
 

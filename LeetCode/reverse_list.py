@@ -34,5 +34,21 @@ def reverseList(head):
         cur = next
     return prev
 
-reverse_list = reverseList(head)
-print_list(reverse_list)
+# reverse_list = reverseList(head)
+# print_list(reverse_list)
+import numpy as np
+a = [2,3,4, 1]
+a.sort()
+print(a)
+
+nums = [1,2,3,4]
+target = 3
+def sum(nums, target):
+    n = len(nums)
+    hashtable = {}
+    for i in range(n):
+        other = target - nums[i]
+        if other in hashtable:
+            return [hashtable[other], i]
+        hashtable[nums[i]] = i
+    return []

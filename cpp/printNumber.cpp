@@ -1,23 +1,34 @@
 #include <iostream>
+#include <mutex>
 #include <thread>
 
-// 打印数字的线程函数
-void printNumbers(int start, int end) {
-    for (int i = start; i <= end; ++i) {
-        std::cout << i << " ";
+std::mutex mtx;
+int counter = 1;
+
+void printNumbers(int threadID, int maxCount) {
+    while(true) {
+        mtx.lock();
+        if(counter > maxCount) {
+            mtx.unlock();
+            return;
+        }
+        if(counter % 3 == threadID) {
+            std::cout << "Thread " << threadID + 1 << ": " << counter++ << std::endl;
+        }
+        mtx.unlock();
     }
 }
 
 int main() {
-    // 创建三个线程，并分别指定打印的范围
-    std::thread thread1(printNumbers, 1, 33);
-    std::thread thread2(printNumbers, 34, 66);
-    std::thread thread3(printNumbers, 67, 100);
+    const int MAX_COUNT = 100;
 
-    // 等待每个线程执行完毕
-    thread1.join();
-    thread2.join();
-    thread3.join();
+    std::thread t1(printNumbers, 0, MAX_COUNT);
+    std::thread t2(printNumbers, 1, MAX_COUNT);
+    std::thread t3(printNumbers, 2, MAX_COUNT);
+
+    t1.join();
+    t2.join();
+    t3.join();
 
     return 0;
 }

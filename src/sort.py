@@ -4,13 +4,12 @@ def insert_sort(nums):
     if n < 2:
         return
     for i in range(1, n):
-        k = i
+        val = nums[i]
         j = i-1
-        while j >= 0:
-            if nums[j] > nums[k]:
-                nums[j], nums[k] = nums[k], nums[j]
-                k = j
+        while j >= 0 and nums[j] > val:
+            nums[j+1] = nums[j]
             j -= 1
+        nums[j+1] = val
 
 
 

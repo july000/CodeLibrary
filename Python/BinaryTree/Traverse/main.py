@@ -85,24 +85,77 @@ class BinaryTree:
       levelorderList.append(levelNode)
     return levelorderList
 
+  def getWidthTree(self, root):
+    if not root:
+      return 0
+    q = deque()
+    nodeMap = {}
+    q.append(root)
+    nodeMap[root] = 1
+    res = 0
+    curNodeLevel = 1
+    LevelNodesNum = 0
+    while q:
+      cur = q.popleft()
+      if curNodeLevel != nodeMap[cur]:
+        res = max(res, LevelNodesNum)
+        LevelNodesNum = 1
+        curNodeLevel += 1
+      else:
+        LevelNodesNum += 1
+      if cur.left:
+        q.append(cur.left)
+        nodeMap[cur.left] = curNodeLevel+1
+      if cur.right:
+        q.append(cur.right)
+        nodeMap[cur.right] = curNodeLevel+1
+    return res
+
+
+  def getNodesNum(self, root):
+    if not root:
+      return 0
+    return self.getNodesNum(root.left) + self.getNodesNum(root.right) + 1
+
+  def getAllLeafs(self, root):
+    pass
+
+  def getDepthTree(self, root):
+    if not root:
+      return 0
+    return max(self.getDepthTree(root.left), self.getDepthTree(root.right)) + 1
+
 
 tree = BinaryTree()
 root = tree.createTree()
-preorderTraverseList = tree.preorderTraverse(root)
-inorderTraverseList = tree.inorderTraverse(root)
-postorderTraverseList = tree.postorderTraverse(root)
-levelorderList = tree.levelorderTraversal(root)
-levelorderListArray = tree.levelorderTraversal2(root)
 
-nonRecursiveTree = nonRecursiveTraverse(root)
-preorderList = nonRecursiveTree.preorder()
-postorderList = nonRecursiveTree.postorder()
-inorderList = nonRecursiveTree.inorder()
-print(preorderList)
-print(preorderTraverseList)
-print(inorderList)
-print(inorderTraverseList)
-print(postorderTraverseList)
-print(postorderList)
-print(levelorderList)
-print(levelorderListArray)
+# preorderTraverseList = tree.preorderTraverse(root)
+# inorderTraverseList = tree.inorderTraverse(root)
+# postorderTraverseList = tree.postorderTraverse(root)
+# levelorderList = tree.levelorderTraversal(root)
+# levelorderListArray = tree.levelorderTraversal2(root)
+
+# nonRecursiveTree = nonRecursiveTraverse(root)
+# preorderList = nonRecursiveTree.preorder()
+# postorderList = nonRecursiveTree.postorder()
+# inorderList = nonRecursiveTree.inorder()
+
+
+# print(preorderList)
+# print(preorderTraverseList)
+# print(inorderList)
+# print(inorderTraverseList)
+# print(postorderTraverseList)
+# print(postorderList)
+# print(levelorderList)
+# print(levelorderListArray)
+
+depth = tree.getDepthTree(root)
+print(depth)
+
+nodesNum = tree.getNodesNum(root)
+print(nodesNum)
+
+width = tree.getWidthTree(root)
+print(width)
+
